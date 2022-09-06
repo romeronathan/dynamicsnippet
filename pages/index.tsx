@@ -1,8 +1,9 @@
+import { getCookie } from 'cookies-next'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { connectToDatabase } from '../middleware/database'
 import styles from '../styles/Home.module.css'
+
 
 const Home: NextPage = () => {
   return (
@@ -14,6 +15,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <a href="/api/google">Login with google</a>
 
         </main>
  
@@ -21,15 +23,13 @@ const Home: NextPage = () => {
   )
 }
 
-export async function getServerSideProps(params: any) {
-  const {db} = await connectToDatabase();
-
-  return {
-    props: {
-     
-    }
+export async function getServerSideProps({ req, res }) {
+  try {
+    const cookieExists = getCookie('token', {req, res });
+    if(cookieExists) return { redirect: { destination: 'http://localhost:3000/dashboard' } }
+    else return { props: { }};
+  } catch (error) {
+    return { props: { }};
   }
-  
-  
 }
 export default Home
