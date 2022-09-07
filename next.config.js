@@ -4,7 +4,8 @@ const nextConfig = {
   swcMinify: true,
   env: {
     MONGODB_URI: "mongodb+srv://nathantest:nathantest@dynamicsnippets.zjcalkt.mongodb.net/?retryWrites=true&w=majority",
-    MONGODB_DB: "DynamicSnippets"
+    MONGODB_DB: "DynamicSnippets",
+    JWT_SECRET: process.env.JWT_SECRET,
   }
 }
 
