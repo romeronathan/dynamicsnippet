@@ -15,7 +15,7 @@ export default async function handler(req, res, next) {
         await connect();
 
         await User.findOne({ _id: req.body.id }).then((user) => {
-            console.log("User" + user);
+
             if (user) {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');

@@ -24,7 +24,7 @@ function Navbar({ ...props }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-        console.log("Hey");
+   
 
         const fetchData = async () => {
 
@@ -65,7 +65,6 @@ function Navbar({ ...props }) {
                         setIsAuthenticated(true);
 
                     }).catch((err) => {
-                        console.log("Getting user");
                         console.log(err);
                         setIsAuthenticated(false);
                     });
@@ -79,7 +78,6 @@ function Navbar({ ...props }) {
         fetchData();
 
     }, [])
-    console.log(user);
     const router = useRouter();
     const logout = () => {
         setIsAuthenticated(false);
@@ -106,13 +104,23 @@ function Navbar({ ...props }) {
                             <div className="flex flex-col mt-4 gap-4 sm:flex-row sm:mt-0 sm:items-center">
                                 {" "}
 
-                                <Link href={"create"}>
+                                <Link href={"/feature/create"}>
 
                                     <button
                                         className="block px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg transition hover:bg-indigo-700 focus:outline-none focus:ring"
                                         type="button"
                                     >
                                         Create Snippet
+                                    </button>
+                                </Link>
+
+                                <Link href={"/feature/snippets"}>
+
+                                    <button
+                                        className="block px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                                        type="button"
+                                    >
+                                        View Snippets
                                     </button>
                                 </Link>
 

@@ -9,8 +9,60 @@ import { useRouter } from "next/router";
 import { User } from "../../models";
 import { Snippet } from "../../models/snippet";
 import Link from "next/link";
+import { useEffect } from "react";
+import { cookie } from "express-validator";
 
 function Snippets({ snippets }) {
+  useEffect(() => {
+
+
+    const fetchData = async () => {
+
+      try {
+
+        const token = getCookie("token");
+
+
+        if (!token) {
+
+          return { redirect: { destination: "/" } };
+
+        }
+
+        await jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+          if (err) {
+
+            removeCookies("token");
+            return { redirect: { destination: "/" } };
+          }
+
+          await fetch('http://localhost:3000/api/snippets/retrieve',
+            {
+              credentials: "include"
+            }
+          ).then(async (res) => {
+
+
+            let obj = await res.json();
+            console.log(obj);
+
+
+            if (!obj) return { redirect: { destination: "/" } };
+
+
+          }).catch((err) => {
+            console.log(err);
+          });
+        });
+
+      } catch (error) {
+
+        return { redirect: { destination: "/" } };
+      }
+    };
+    fetchData();
+
+  }, [])
   return (
     <div>
       <div className="pt-10 max-w-xl mx-auto text-center">
@@ -21,7 +73,7 @@ function Snippets({ snippets }) {
           modi suscipit est ipsum qui nulla.
         </p>
 
-        <Link href="/features/create">
+        <Link href="/feature/create">
           <a
             className="flex items-center justify-between px-5 py-3 mt-8 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-600 group"
           >

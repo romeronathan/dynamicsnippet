@@ -7,9 +7,11 @@ import passport from "passport";
 
 export default async function handler(req, res, next) {
     await connect();
+    passport.authenticate('session');
     passport.authenticate("google", (err, user, info) => {
-        if(err || !user) res.redirect('http://localhost:3000?a=auth_fail');
-        setCookies('token', info.token, { req, res});
+        if (err || !user) res.redirect('http://localhost:3000?a=auth_fail');
+        setCookies('token', info.token, { req, res });
+        // passport session
         res.redirect('http://localhost:3000/feature/snippets');
     })(req, res, next);
 }
